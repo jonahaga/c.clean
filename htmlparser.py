@@ -14,19 +14,19 @@ class MyHTMLParser(HTMLParser):
             if attrs and attrs[0][0] != 'href' and attrs[0][0] == 'class':
                 if attrs and ' ' in attrs[0][1]:
                     split_attrs = attrs[0][1].split()
-                    self.selectors.append({tag:'.' + split_attrs[0]})
-                    self.selectors.append({tag:'.' + split_attrs[1]})
-                    self.selectors.append({tag:'.' + split_attrs[0] + '.' + split_attrs[1]})
+                    self.selectors.append('.' + split_attrs[0])
+                    self.selectors.append('.' + split_attrs[1])
+                    self.selectors.append('.' + split_attrs[0] + '.' + split_attrs[1])
                 else:
-                    self.selectors.append({tag:'.' + attrs[0][1]})
+                    self.selectors.append('.' + attrs[0][1])
             elif attrs and attrs[0][0] != 'href' and attrs[0][0] == 'id':
                 if attrs and ' ' in attrs[0][1]:
                     split_attrs = attrs[0][1].split()
-                    self.selectors.append({tag:'#' + split_attrs[0]})
-                    self.selectors.append({tag:'#' + split_attrs[1]})
-                    self.selectors.append({tag:'#' + split_attrs[0] + '#' + split_attrs[1]})
+                    self.selectors.append('#' + split_attrs[0])
+                    self.selectors.append('#' + split_attrs[1])
+                    self.selectors.append('#' + split_attrs[0] + '#' + split_attrs[1])
                 else:
-                    self.selectors.append({tag:'#' + attrs[0][1]})
+                    self.selectors.append('#' + attrs[0][1])
         elif tag == 'link':
             if attrs[0][0] == 'href':
                 self.css_files.append(attrs[0][1])
