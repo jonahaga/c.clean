@@ -82,7 +82,7 @@ def css_parser(files_to_parse):
                         if m == '':
                             pass
                         else:
-                            css_dict.update({m:j})
+                            css_dict.update({m:[i, i.selectorList, j]})
 
                 elif ' ' in j.selectorText:
                     combinator = str(j.selectorText)
@@ -97,14 +97,14 @@ def css_parser(files_to_parse):
                                 if s == '':
                                     pass
                                 else:
-                                    css_dict.update({s:j})
+                                    css_dict.update({s:[i, i.selectorList, j]})
                         else:
-                            css_dict.update({k:j})               
+                            css_dict.update({k:[i, i.selectorList, j]})               
                 
                 elif '*' in j.selectorText:
                     pass
                 else:
-                    css_dict.update({str(j.selectorText):j})
+                    css_dict.update({str(j.selectorText):[i, i.selectorList, j]})
 
     return css_dict
 
@@ -140,9 +140,21 @@ def del_dupes(l):
         return h
 
 def compare_selectors():
-    for key in del_dupes(split_pseudo(css_parser(css_file))):
+    selectors_to_delete = []
+
+    for key, value in del_dupes(split_pseudo(css_parser(css_file))).iteritems():
         if key not in del_dupes(parser.selectors):
-            print key, 'is not used'
+            if len(value[1]) > 1:
+                pass
+            else:
+                print value[0]
+                css_file.deleteRule(value[0])
+            # print key, 'is not used'
+            # print key, value
+            # rules_to_delete.append(value[1])
+
+
+    print 'NEW CSS\n', css_file.cssText
 
 
 # instantiate the parser and feed it some HTML
