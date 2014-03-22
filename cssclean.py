@@ -65,6 +65,11 @@ def compile_files(files_to_parse):
 
     return new_file
 
+# instantiate the parser and feed it some HTML
+parser = MyHTMLParser()
+parser.feed(compile_files(html_to_parse))
+parser.close()
+
 sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
 
 def css_parser(files_to_parse):
@@ -141,34 +146,35 @@ def del_dupes(l):
 
 def delete_selectors():
     rules_to_delete = []
+    ignore = ['body', 'div']
 
     for key, value in del_dupes(split_pseudo(css_parser(sheet))).iteritems():
-        if key not in del_dupes(parser.selectors):
+        if key not in del_dupes(parser.selectors) and key not in ignore:
             if len(value[2]) > 1:
                 rule_idx = value[1]
 
                 for idx, data in enumerate(sheet.cssRules[rule_idx].selectorList):
                     if idx != len(sheet.cssRules[rule_idx].selectorList) - 1:
-                        print 'This is not the last item.\n\tData: ', data,'\n\t', 'Index:', idx
                         pass
                     else:
-                        print 'This is the last item.\n\tData: ', data,'\n\t', 'Index:', idx
                         del sheet.cssRules[rule_idx].selectorList[idx]
             else:
-                rules_to_delete.append(value[0])
+                rules_to_delete.append(value[1])
 
     # print 'NEW CSS\n', sheet.cssText
     return rules_to_delete
 
-def delete_rules():
+def delete_rules(rules):
+    rules = delete_selectors()
+
+    rules.sort()
+    rules.reverse()
     
+    for i in rules:
+        sheet.deleteRule(i)
 
+    return sheet.cssText
 
-# instantiate the parser and feed it some HTML
-parser = MyHTMLParser()
-parser.feed(compile_files(html_to_parse))
-parser.close()
-
-# instantiate the css parser and feed it some CSS
-print delete_selectors()
+# Run delete_rules function to delete unused rules and get new stylesheet
+print delete_rules(delete_selectors)
 
