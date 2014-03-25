@@ -1,0 +1,327 @@
+(cssutils.css.CSSStyleRule(selectorText=u'#footer h2', style=u'font-size: 12px;\nfont-weight: 500;\nletter-spacing: 1px;\ntext-transform: uppercase'), 85)
+(cssutils.css.CSSStyleRule(selectorText=u'#footer .logo h1', style=u'font-size: 22px;\nline-height: 1'), 84)
+(cssutils.css.CSSStyleRule(selectorText=u'.projectNav .previous.inactive', style=u'background: transparent url(img/proj-nav-arrow-left.png) no-repeat;\nbackground-position: 0 -56px'), 67)
+(cssutils.css.CSSStyleRule(selectorText=u'a.nivo-prevNav', style=u'left: 10px'), 47)
+(cssutils.css.CSSStyleRule(selectorText=u'.grid_1', style=u'width: 60px'), 6)
+(cssutils.css.CSSStyleRule(selectorText=u'.grid_2', style=u'width: 140px'), 7)
+(cssutils.css.CSSStyleRule(selectorText=u'a.nivo-nextNav', style=u'background-position: -32px 0;\nright: 10px'), 46)
+(cssutils.css.CSSStyleRule(selectorText=u'.nivo-controlNav a.active', style=u'background-position: -10px 0'), 44)
+(cssutils.css.CSSStyleRule(selectorText=u'#header h1 span', style=u'font-weight: 500'), 26)
+(cssutils.css.CSSStyleRule(selectorText=u'ul.footer-nav li a', style=u'color: #9B9B9B;\ndisplay: block'), 91)
+(cssutils.css.CSSStyleRule(selectorText=u'.jcarousel-item-horizontal', style=u'margin-right: 20px'), 56)
+(cssutils.css.CSSStyleRule(selectorText=u'.carouselThumbs ul li', style=u'float: left;\nwidth: 220px'), 55)
+(cssutils.css.CSSStyleRule(selectorText=u'.nivo-directionNav a', style=u'display: block;\nwidth: 32px;\nheight: 34px;\nbackground: url(img/arrows.png) no-repeat;\ntext-indent: -9999px;\nborder: 0'), 45)
+(cssutils.css.CSSStyleRule(selectorText=u'.grid_10', style=u'width: 780px'), 15)
+(cssutils.css.CSSStyleRule(selectorText=u'.main a.ex-link:after', style=u'content: url(img/ex-link.png);\nmargin-left: 3px'), 96)
+(cssutils.css.CSSStyleRule(selectorText=u'#footer p', style=u'font-size: 12px'), 86)
+(cssutils.css.CSSStyleRule(selectorText=u'.grid_11', style=u'width: 860px'), 16)
+
+/* @override http://jonahaga.com/assets/style.css
+   ================================================== */
+
+* {
+    margin: 0;
+    padding: 0; }
+
+body {
+    background: #ecf1f6 url(img/grid-bg.png) repeat;
+    color: #7D7D7B;
+    font: normal 13px/1.5 "proxima-nova-1", "proxima-nova-2", sans-serif;
+    padding-top: 30px; }
+
+#container {
+    background: #fff;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.097656) 0 0 6px;
+    width: 1000px; }
+
+.main { padding-bottom: 40px }
+
+/* @group Grid
+   ================================================== */
+
+.grid_3 { width: 220px }
+
+.grid_4 { width: 300px }
+
+.grid_5 { width: 380px }
+
+.grid_6 { width: 460px }
+
+.grid_7 { width: 540px }
+
+.grid_8 { width: 620px }
+
+.grid_9 { width: 700px }
+
+.grid_12 { width: 940px }
+
+.column {
+    display: inline;
+    float: left;
+    margin: 0 10px;
+    overflow: hidden; }
+
+.row {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 960px; }
+
+    .row .row {
+        display: inline-block;
+        margin: 0 -10px;
+        width: auto; }
+
+/* @end
+   ================================================== */
+
+/* @group Header
+   ================================================== */
+
+#header { padding: 30px 0 }
+
+.header-border {
+    border-bottom: 1px solid #007faa;
+    margin: 20px 10px 0; }
+
+#header h1 {
+    font-size: 33px;
+    font-weight: 700;
+    line-height: 1; }
+
+#header h2 {
+    color: #007faa;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase; }
+
+ul.nav {
+    float: right;
+    list-style-type: none;
+    margin-top: 20px; }
+
+    ul.nav li {
+        float: left;
+        margin: 0 0 0 39px; }
+
+        ul.nav li a {
+            color: #9B9B9B;
+            display: block; }
+
+    ul.nav a:hover { color: #12AEE8 }
+
+    ul.nav a.active {
+        border-bottom: 3px solid #12aee8;
+        color: #12AEE8; }
+
+/* @end
+   ================================================== */
+
+/* @group Nivo Slider
+   ================================================== */
+
+#slideshow {
+    margin-bottom: 30px;
+    width: 940px; }
+
+.nivo-controlNav a {
+    display: block;
+    width: 10px;
+    height: 10px;
+    background: url(img/bullets.png) no-repeat;
+    text-indent: -9999px;
+    border: 0;
+    margin-right: 6px;
+    float: left; }
+
+#slider { width: 940px }
+
+    #slider img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none; }
+
+    #slider a { border: 0 }
+
+.nivo-controlNav {
+    position: absolute;
+    right: 25px;
+    bottom: 25px; }
+
+.nivo-controlNav {
+    position: absolute;
+    right: 5px;
+    bottom: -25px; }
+
+    .nivo-controlNav a {
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: url(img/bullets.png) no-repeat;
+        text-indent: -9999px;
+        border: 0;
+        margin-right: 6px;
+        float: left; }
+
+    .nivo-controlNav a {
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: url(img/bullets_dark.png) no-repeat;
+        text-indent: -9999px;
+        border: 0;
+        margin-right: 6px;
+        float: left; }
+
+/* @end
+   ================================================== */
+
+/* @group Carousel
+   ================================================== */
+
+.carousel h2,
+#firstCarousel h2,
+#secondCarousel h2 {
+    color: #007faa;
+    font-size: 18px; }
+
+.carouselThumbs {
+    float: right;
+    width: 700px; }
+
+.main .carouselThumbs h1 {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 0; }
+
+.carouselThumbs p {
+    font-size: 12px;
+    margin-bottom: 0; }
+
+.carouselThumbs ul { overflow: hidden }
+
+/* @end
+   ================================================== */
+
+/* @group Project Nav
+   ================================================== */
+
+.projectNav {
+    margin: 30px 0 0 0;
+    overflow: hidden; }
+
+    .projectNav a {
+        display: block;
+        width: 28px;
+        height: 28px;
+        text-indent: -9999px; }
+
+    .projectNav div {
+        float: left;
+        margin-right: 10px; }
+
+    .projectNav .next a {
+        background: transparent url(img/proj-nav-arrow-right.png) no-repeat;
+        background-position: 0 -28px; }
+
+    .projectNav .next a:hover { background-position: 0 0 }
+
+    .projectNav .next.inactive {
+        background: transparent url(img/proj-nav-arrow-right.png) no-repeat;
+        background-position: 0 -56px; }
+
+    .projectNav .previous a {
+        background: transparent url(img/proj-nav-arrow-left.png) no-repeat;
+        background-position: 0 -28px; }
+
+    .projectNav .previous a:hover { background-position: 0 0 }
+
+/* @end
+   ================================================== */
+
+/* @group Text
+   ================================================== */
+
+a {
+    color: #12AEE8;
+    text-decoration: none; }
+
+h1,
+h2 {
+    font-weight: 600;
+    color: #f7138c; }
+
+.main h1 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 30px; }
+
+p { margin: 0 0 25px }
+
+p.desc {
+    font-size: 15px;
+    line-height: 1.7; }
+
+/* @end
+   ================================================== */
+
+/* @group Structure
+   ================================================== */
+
+.feature img { margin-bottom: 20px }
+
+.spacer {
+    border-top: 1px solid #c5e2ec;
+    overflow: hidden;
+    margin: 40px 10px; }
+
+a.lightbox_image {
+    cursor: -moz-zoom-in;
+    cursor: -webkit-zoom-in; }
+
+/* @end
+   ================================================== */
+
+/* @group Footer
+   ================================================== */
+
+#footer {
+    background: #f8fafd;
+    border-top: 1px solid #eaf0f8;
+    padding: 30px 0; }
+
+    #footer h1 {
+        color: #007faa;
+        font-size: 15px; }
+
+    #footer .logo { padding: 25px 0 10px }
+
+    #footer .spacer { text-indent: -99999px }
+
+ul.footer-nav {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px; }
+
+    ul.footer-nav li {
+        border-bottom: 1px solid #d2e3fd;
+        padding: 5px 0 3px; }
+
+    ul.footer-nav a:hover { color: #12AEE8 }
+
+/* @end
+   ================================================== */
+
+/* @group Advanced Selectors
+   ================================================== */
+
+.main a.pdf:after {
+    content: url(img/pdf.jpg);
+    margin-left: 3px; }
+
+/* @end
+   ================================================== */

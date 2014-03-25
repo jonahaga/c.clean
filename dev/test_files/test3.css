@@ -1,0 +1,27 @@
+body { font-family: serif }
+
+.header,
+.content,
+.footer {
+    padding: 0;
+    margin: 0; }
+
+ul.nav {
+    float: right;
+    list-style-type: none;
+    margin-top: 20px; }
+
+    ul.nav li,
+    ul.nav ul a {
+        float: left;
+        margin: 0 0 0 39px; }
+
+        ul.nav li a {
+            color: #9B9B9B;
+            display: block; }
+
+    ul.nav a:hover { color: #12AEE8 }
+
+    ul.nav a.active {
+        border-bottom: 3px solid #12aee8;
+        color: #12AEE8; }
