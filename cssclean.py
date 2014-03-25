@@ -1,12 +1,7 @@
-from HTMLParser import HTMLParser
-import urllib
 import cssutils
 import re
-
-
-opener = urllib.FancyURLopener({})
-html_to_parse = raw_input('> HTML to Parse: ')
-css_to_parse = raw_input('> CSS to Parse: ')
+from HTMLParser import HTMLParser
+from urllib2 import urlopen
 
 
 # create a subclass and override the handler methods
@@ -56,7 +51,7 @@ def compile_files(files_to_parse):
 
     for i in file_list:
         stripped = i.strip()
-        f = opener.open(stripped, 'r')
+        f = urlopen(stripped)
         n = f.read()
 
         new_file += n
@@ -65,14 +60,7 @@ def compile_files(files_to_parse):
 
     return new_file
 
-# instantiate the parser and feed it some HTML
-parser = MyHTMLParser()
-parser.feed(compile_files(html_to_parse))
-parser.close()
-
-sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
-
-def css_parser(files_to_parse):
+def css_parser(sheet):
     css_dict = {}
 
     for i_idx, i in enumerate(sheet.cssRules):
@@ -113,7 +101,7 @@ def css_parser(files_to_parse):
 
     return css_dict
 
-def split_pseudo(d):
+def split_pseudo(d, sheet):
     css_dict = {}
 
     for key in d:
@@ -144,11 +132,13 @@ def del_dupes(l):
                 h.append(i)
         return h
 
-def delete_selectors():
-    rules_to_delete = []
+def delete_selectors(sheet, parser):
+    rules_to_delete_index = []
+    rules_to_delete_text = [] 
+    selectors_deleted = []
     ignore = ['body', 'div']
 
-    for key, value in del_dupes(split_pseudo(css_parser(sheet))).iteritems():
+    for key, value in del_dupes(split_pseudo(css_parser(sheet), sheet)).iteritems():
         if key not in del_dupes(parser.selectors) and key not in ignore:
             if len(value[2]) > 1:
                 rule_idx = value[1]
@@ -157,15 +147,16 @@ def delete_selectors():
                     if idx != len(sheet.cssRules[rule_idx].selectorList) - 1:
                         pass
                     else:
+                        selectors_deleted.append(str(key) + ' from ' + str(value[2].selectorText))
                         del sheet.cssRules[rule_idx].selectorList[idx]
             else:
-                rules_to_delete.append(value[1])
+                rules_to_delete_text.append(str(value[2].selectorText))
+                rules_to_delete_index.append(value[1])
 
-    # print 'NEW CSS\n', sheet.cssText
-    return rules_to_delete
+    return (rules_to_delete_index, selectors_deleted, rules_to_delete_text)
 
-def delete_rules(rules):
-    rules = delete_selectors()
+def delete_rules(rules, sheet, parser):
+    rules = delete_selectors(sheet, parser)[0]
 
     rules.sort()
     rules.reverse()
@@ -173,8 +164,4 @@ def delete_rules(rules):
     for i in rules:
         sheet.deleteRule(i)
 
-    return sheet.cssText
-
-# Run delete_rules function to delete unused rules and get new stylesheet
-print delete_rules(delete_selectors)
-
+    return sheet.cssText 
