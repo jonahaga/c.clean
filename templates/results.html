@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block body %}
+    <h2>The following unused rules were deleted from your stylesheet:</h2>
+        <code>
+            <ul>
+                {% for item in deleted_rules %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </code>
+
+    <hr />
+    
+    <h2>The following unused selectors were deleted from your stylesheet:</h2>
+        <code>
+            <ul>
+                {% for item in deleted_selectors %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </code>
+
+    <hr />
+    
+    <div class="stylesheet">
+        <h2>Here is your new, clean stylesheet</h2>
+            <textarea rows="50">
+                {{ new_stylesheet }}
+            </textarea>
+    </div>
+
+    <button>Clean More Stylesheets</button>
+{% endblock %}

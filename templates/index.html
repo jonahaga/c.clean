@@ -1,0 +1,14 @@
+{% extends 'master.html' %}
+
+{% block body %}
+        <form method="post" action="/results">
+            <label>Paste URLs to the HTML files to parse</label>
+                <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
+                <textarea cols="80" rows="5" name="html" placeholder="ex. http://mysite.com, http://mysite.com/about"></textarea>
+            <label>Paste URLs to the CSS files to parse</label>
+                <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
+                <textarea cols="80" rows="5" name="css" placeholder="ex. http://mysite.com/assets/styles.css"></textarea>
+            <input type="submit">
+        </form>
+
+{% endblock %}
