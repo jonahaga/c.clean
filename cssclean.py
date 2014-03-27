@@ -64,17 +64,17 @@ def compile_files(files_to_parse):
     return new_file
 
 def css_parser(sheet):
-    css_dict = []
+    css_list = []
 
     for i_idx, i in enumerate(sheet.cssRules):
         if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule):
             for idx, j in enumerate(i.selectorList):
-                css_dict.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
+                css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
 
-    return css_dict
+    return css_list
 
 def split_combinator(l, sheet):
-    css_dict = []
+    css_list = []
 
     # print "L LENGTH:", len(l)
 
@@ -89,15 +89,15 @@ def split_combinator(l, sheet):
                 if j == '' or len(j) <= 1:
                     pass
                 else:
-                    # print "BEFORE for i in dot_combinator:", len(css_dict)
+                    # print "BEFORE for i in dot_combinator:", len(css_list)
                     # print "INDEX for i in dot_combinator:", i[1][1], i[0]
-                    css_dict.append((j, i[1]))
-                    # print "AFTER for j in dot_combinator:", len(css_dict)
+                    css_list.append((j, i[1]))
+                    # print "AFTER for j in dot_combinator:", len(css_list)
 
             # print "INDEX if ' ' not in key:", i[1][1], i[0]
-            # print "BEFORE if ' ' not in key:", len(css_dict)
-            css_dict.append((i[0], i[1]))
-            # print "AFTER if ' ' not in key:", len(css_dict)
+            # print "BEFORE if ' ' not in key:", len(css_list)
+            css_list.append((i[0], i[1]))
+            # print "AFTER if ' ' not in key:", len(css_list)
 
         elif ' ' in i[0]:
             # print "INDEX elif ' ' in key:", i[1][1], i[0]
@@ -117,41 +117,41 @@ def split_combinator(l, sheet):
                             pass
                         else:
                             # print "INDEX for s in dot_split: else", i[1][1], i[0]
-                            # print "BEFORE for s in dot_split: else", len(css_dict)
-                            css_dict.append((s, i[1]))
-                            # print "AFTER for s in dot_split: else", len(css_dict)
+                            # print "BEFORE for s in dot_split: else", len(css_list)
+                            css_list.append((s, i[1]))
+                            # print "AFTER for s in dot_split: else", len(css_list)
                 else:
                     # print "INDEX for j in split_combinator: else", i[1][1], i[0]
-                    # print "BEFORE for j in split_combinator: else", len(css_dict)
-                    css_dict.append((j, i[1]))
-                    # print "AFTER for j in split_combinator: else", len(css_dict) 
+                    # print "BEFORE for j in split_combinator: else", len(css_list)
+                    css_list.append((j, i[1]))
+                    # print "AFTER for j in split_combinator: else", len(css_list) 
 
         else:
             # print "INDEX else:", i[1][1], i[0]
-            # print "BEFORE else:", len(css_dict)
-            css_dict.append((i[0], i[1]))
-            # print "AFTER else:", len(css_dict)
+            # print "BEFORE else:", len(css_list)
+            css_list.append((i[0], i[1]))
+            # print "AFTER else:", len(css_list)
 
 
-    return css_dict
+    return css_list
 
 def split_pseudo(l, sheet):
-    css_dict = []
+    css_list = []
 
     for i in l:
         if ':' in i[0]:
             split_pseudo = i[0].split(':')
 
             if '[' not in split_pseudo[0]:
-                css_dict.append((split_pseudo[0], i[1]))
+                css_list.append((split_pseudo[0], i[1]))
             else:
                 attribute_selector = split_pseudo[0].split('[')
-                css_dict.append((attribute_selector[0], i[1]))
+                css_list.append((attribute_selector[0], i[1]))
 
         else:
-            css_dict.append((i[0], i[1]))
+            css_list.append((i[0], i[1]))
 
-    return css_dict
+    return css_list
 
 def del_dupes(l):
     h = []
