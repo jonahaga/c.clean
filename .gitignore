@@ -5,3 +5,4 @@ soupy-test.py
 .DS_Store
 dev/
 env/
+cssclean_heroku_keys*
