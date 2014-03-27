@@ -7,7 +7,7 @@ import urllib
 # body { font-family: serif; }
 # div.header , div.content, div.footer { padding: 0; margin: 0; }'''
 opener = urllib.FancyURLopener({})
-f = opener.open('/Users/Jona/Dropbox/Python/Hackbright/Project/test_files/test3.css')
+f = opener.open('/Users/Jona/Dropbox/Python/Hackbright/Project/dev/test_files/test3.css')
 css = f.read()
 f.close()
 
@@ -18,6 +18,7 @@ sheet = cssutils.parseString(css)
 # Let's remove a rule!
 print "sheet.cssRules: ", len(sheet.cssRules)
 sheet.deleteRule(0)
+# del sheet.cssRules[0]
 print "sheet.cssRules: ", len(sheet.cssRules)
 
 
