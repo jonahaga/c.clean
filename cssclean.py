@@ -76,62 +76,40 @@ def css_parser(sheet):
 def split_combinator(l, sheet):
     css_list = []
 
-    # print "L LENGTH:", len(l)
-
     for i in l:
         p = re.compile('\.\w+(-|\w)+\.\w+(-|\w)+')
 
         if p.search(i[0]) and ' ' not in i[0]:
-            # print "INDEX if p.search", i[1][1], i[0]
             dot_combinator = re.split('(\.\w+(-|\w)+)(\.\w+(-|\w)+)', i[0])
 
             for j in dot_combinator:
                 if j == '' or len(j) <= 1:
                     pass
                 else:
-                    # print "BEFORE for i in dot_combinator:", len(css_list)
-                    # print "INDEX for i in dot_combinator:", i[1][1], i[0]
                     css_list.append((j, i[1]))
-                    # print "AFTER for j in dot_combinator:", len(css_list)
 
-            # print "INDEX if ' ' not in key:", i[1][1], i[0]
-            # print "BEFORE if ' ' not in key:", len(css_list)
             css_list.append((i[0], i[1]))
-            # print "AFTER if ' ' not in key:", len(css_list)
 
         elif ' ' in i[0]:
-            # print "INDEX elif ' ' in key:", i[1][1], i[0]
 
             split_combinator = i[0].split()
 
             for j in split_combinator:
                 if j == '>' or j == '+' or j == '~' or j == "*":
-                    # print "INDEX for j in split_combinator: if j == '>' or j == '+' or j == '~':", i[1][1], i[0]
                     pass
                 elif p.search(j):
                     dot_split = re.split('(\.\w+(-|\w)+)(\.\w+(-|\w)+)', j)
 
                     for s in dot_split:
                         if s == '' or len(s) <= 1:
-                            # print "INDEX for s in dot_split: if s == '' or len(s) <= 1", i[1][1], i[0]
                             pass
                         else:
-                            # print "INDEX for s in dot_split: else", i[1][1], i[0]
-                            # print "BEFORE for s in dot_split: else", len(css_list)
                             css_list.append((s, i[1]))
-                            # print "AFTER for s in dot_split: else", len(css_list)
                 else:
-                    # print "INDEX for j in split_combinator: else", i[1][1], i[0]
-                    # print "BEFORE for j in split_combinator: else", len(css_list)
                     css_list.append((j, i[1]))
-                    # print "AFTER for j in split_combinator: else", len(css_list) 
 
         else:
-            # print "INDEX else:", i[1][1], i[0]
-            # print "BEFORE else:", len(css_list)
             css_list.append((i[0], i[1]))
-            # print "AFTER else:", len(css_list)
-
 
     return css_list
 
