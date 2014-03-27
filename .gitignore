@@ -3,3 +3,5 @@ mincss/
 duplicates.js
 soupy-test.py
 .DS_Store
+dev/
+env/
