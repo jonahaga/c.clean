@@ -64,17 +64,17 @@ def compile_files(files_to_parse):
     return new_file
 
 def css_parser(sheet):
-    css_list = []
+    css_dict = []
 
     for i_idx, i in enumerate(sheet.cssRules):
         if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule):
             for idx, j in enumerate(i.selectorList):
-                css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
+                css_dict.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
 
-    return css_list
+    return css_dict
 
 def split_combinator(l, sheet):
-    css_list = []
+    css_dict = []
 
     for i in l:
         p = re.compile('\.\w+(-|\w)+\.\w+(-|\w)+')
@@ -86,9 +86,9 @@ def split_combinator(l, sheet):
                 if j == '' or len(j) <= 1:
                     pass
                 else:
-                    css_list.append((j, i[1]))
+                    css_dict.append((j, i[1]))
 
-            css_list.append((i[0], i[1]))
+            css_dict.append((i[0], i[1]))
 
         elif ' ' in i[0]:
 
@@ -104,32 +104,32 @@ def split_combinator(l, sheet):
                         if s == '' or len(s) <= 1:
                             pass
                         else:
-                            css_list.append((s, i[1]))
+                            css_dict.append((s, i[1]))
                 else:
-                    css_list.append((j, i[1]))
+                    css_dict.append((j, i[1]))
 
         else:
-            css_list.append((i[0], i[1]))
+            css_dict.append((i[0], i[1]))
 
-    return css_list
+    return css_dict
 
 def split_pseudo(l, sheet):
-    css_list = []
+    css_dict = []
 
     for i in l:
         if ':' in i[0]:
             split_pseudo = i[0].split(':')
 
             if '[' not in split_pseudo[0]:
-                css_list.append((split_pseudo[0], i[1]))
+                css_dict.append((split_pseudo[0], i[1]))
             else:
                 attribute_selector = split_pseudo[0].split('[')
-                css_list.append((attribute_selector[0], i[1]))
+                css_dict.append((attribute_selector[0], i[1]))
 
         else:
-            css_list.append((i[0], i[1]))
+            css_dict.append((i[0], i[1]))
 
-    return css_list
+    return css_dict
 
 def del_dupes(l):
     h = []
