@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 @app.route("/", methods=["POST"])
 def process():
-
     return render_template("results.html")
 
 @app.route("/", methods=["GET"])
@@ -25,8 +24,8 @@ def results():
     sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
     
     # Run delete_rules function to delete unused rules and get new stylesheet
-    deleted_selectors = delete_selectors(sheet, parser)[1]
-    deleted_rules = delete_selectors(sheet, parser)[2]
+    deleted_selectors = del_dupes(delete_selectors(sheet, parser)[1])
+    deleted_rules = del_dupes(delete_selectors(sheet, parser)[2])
     new_stylesheet = delete_rules(delete_selectors, sheet, parser)
 
     deleted_selectors.sort()
@@ -34,7 +33,8 @@ def results():
 
     return render_template("results.html", deleted_selectors=deleted_selectors, 
                                            deleted_rules=deleted_rules,
-                                           new_stylesheet=new_stylesheet)
+                                           new_stylesheet=new_stylesheet
+                                           )
 
 if __name__ == "__main__":
     app.run(debug=True)
