@@ -18,12 +18,11 @@ def results():
 
     # instantiate the parser and feed it some HTML
     parser = MyHTMLParser()
-    parser.feed(compile_files(html_to_parse))
+    parser.feed(compile_html(html_to_parse))
     parser.close()
-
-    sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
     
     # Run delete_rules function to delete unused rules and get new stylesheet
+    sheet = cssutils.CSSParser().parseString(compile_css(css_to_parse))
     deleted_selectors = del_dupes(delete_selectors(sheet, parser)[1])
     deleted_rules = del_dupes(delete_selectors(sheet, parser)[2])
     new_stylesheet = delete_rules(delete_selectors, sheet, parser)
@@ -33,8 +32,7 @@ def results():
 
     return render_template("results.html", deleted_selectors=deleted_selectors, 
                                            deleted_rules=deleted_rules,
-                                           new_stylesheet=new_stylesheet
-                                           )
+                                           new_stylesheet=new_stylesheet )
 
 if __name__ == "__main__":
     app.run(debug=True)
