@@ -6,3 +6,4 @@ soupy-test.py
 dev/
 env/
 cssclean_heroku_keys*
+ghostdriver.log
