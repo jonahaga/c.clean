@@ -12,7 +12,7 @@
     </div>
     {% endif %}
 
-    {% if not deleted_rules %}
+    {% if not deleted_rules and deleted_selectors %}
         <h2>No rules were deleted!</h2>
 
         <hr />
@@ -29,10 +29,14 @@
     </div>
     {% endif %}
 
-    {% if not deleted_selectors %}
+    {% if not deleted_selectors and deleted_rules %}
         <h2>No selectors were deleted!</h2>
 
         <hr />
+    {% endif %}
+
+    {% if not deleted_rules and not deleted_selectors %}
+        <h2>Your stylesheet is already clean! Good job!</h2>
     {% endif %}
     
     {% if deleted_rules or deleted_selectors %}
@@ -45,5 +49,5 @@
     {% endif %}
 
 
-    <p style="margin:30px 0 60px"><a class="button" href={{ url_for("index") }}>Clean More Stylesheets</a></p>
+    <p style="margin:60px 0"><a class="button" href={{ url_for("index") }}>Clean More Stylesheets</a></p>
 {% endblock %}
