@@ -1,6 +1,7 @@
 import cssutils
 import re
 from HTMLParser import HTMLParser
+from selenium import webdriver
 from urllib2 import urlopen
 
 
@@ -13,43 +14,71 @@ class MyHTMLParser(HTMLParser):
             if attrs:
                 for i in attrs:
                     if i[0] == 'class':
-                        class_index = attrs.index(i)
+                        class_idx = attrs.index(i)
                         
-                        if attrs and attrs[class_index][0] == 'class': #or attrs[1][0]:
-                            if attrs and ' ' in attrs[class_index][1]:
-                                split_attrs = attrs[class_index][1].split()
-                                self.selectors.append(tag + '.' + split_attrs[0])
-                                self.selectors.append(tag + '.' + split_attrs[1])
-                                self.selectors.append(tag + '.' + split_attrs[0] + '.' + split_attrs[1])
-                                self.selectors.append('.' + split_attrs[0])
-                                self.selectors.append('.' + split_attrs[1])
-                                self.selectors.append('.' + split_attrs[0] + '.' + split_attrs[1])
+                        if attrs and attrs[class_idx][0] == 'class':
+                            if attrs and ' ' in attrs[class_idx][1]:
+                                split_attrs = attrs[class_idx][1].split()
+                                dot_combinator = []
+                                
+                                for j in split_attrs:
+                                    self.selectors.append(tag + '.' + j)
+                                    self.selectors.append('.' + j)
+                                    dot_combinator.append('.' + j)
+
+                                self.selectors.append(''.join(dot_combinator))
+
                             else:
-                                self.selectors.append('.' + attrs[class_index][1])
-                                self.selectors.append(tag + '.' + attrs[class_index][1])
+                                self.selectors.append('.' + attrs[class_idx][1])
+                                self.selectors.append(tag + '.' + attrs[class_idx][1])
 
                     elif i[0] == 'id':
-                        id_index = attrs.index(i)
+                        id_idx = attrs.index(i)
                         
-                        if attrs and attrs[id_index][0] == 'id':
-                            if attrs and ' ' in attrs[id_index][1]:
-                                split_attrs = attrs[id_index][1].split()
-                                self.selectors.append(tag + '#' + split_attrs[0])
-                                self.selectors.append(tag + '#' + split_attrs[1])
-                                self.selectors.append(tag + '#' + split_attrs[0] + '#' + split_attrs[1])
-                                self.selectors.append('#' + split_attrs[0])
-                                self.selectors.append('#' + split_attrs[1])
-                                self.selectors.append('#' + split_attrs[0] + '#' + split_attrs[1])
+                        if attrs and attrs[id_idx][0] == 'id' and attrs[id_idx][1] != '':
+                            if attrs and ' ' in attrs[id_idx][1]:
+                                split_attrs = attrs[id_idx][1].split()
+                                hash_combinator = []
+
+                                for j in split_attrs:
+                                    self.selectors.append(tag + '#' + j)
+                                    self.selectors.append('#' + j)
+                                    hash_combinator.append('#' + j)
                             else:
-                                self.selectors.append('#' + attrs[id_index][1])
-                                self.selectors.append(tag + '#' + attrs[id_index][1])
+                                self.selectors.append('#' + attrs[id_idx][1])
+                                self.selectors.append(tag + '#' + attrs[id_idx][1])
                     else:
                         self.selectors.append(tag)
             else:
                 self.selectors.append(tag)
 
-def compile_files(files_to_parse):
-    file_list = files_to_parse.split(',')
+def compile_html(html_to_parse):
+    file_list = html_to_parse.split(',')
+    new_file = ''
+
+    driver = webdriver.PhantomJS()
+
+    for i in file_list:
+        stripped = i.strip()
+
+        # Parse HTML for Desktop Screens
+        driver.set_window_size(1024, 768)
+        driver.get(stripped)
+        fd = driver.page_source
+
+        new_file += fd
+
+        # Parse HTML for Mobile Screens
+        driver.set_window_size(480, 320)
+        driver.get(stripped)
+        fd = driver.page_source
+
+        new_file += fd
+
+    return new_file
+
+def compile_css(css_to_parse):
+    file_list = css_to_parse.split(',')
     new_file = ''
 
     for i in file_list:
@@ -57,79 +86,76 @@ def compile_files(files_to_parse):
         f = urlopen(stripped)
         n = f.read()
 
-        new_file += n
+        new_file += n.decode('utf-8-sig')
 
         f.close()
 
     return new_file
 
 def css_parser(sheet):
-    css_dict = []
+    css_list = []
 
     for i_idx, i in enumerate(sheet.cssRules):
-        if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule):
+        if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule) and not isinstance(i, cssutils.css.CSSMediaRule):
             for idx, j in enumerate(i.selectorList):
-                css_dict.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
+                css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
 
-    return css_dict
+    return css_list
 
 def split_combinator(l, sheet):
-    css_dict = []
+    css_list = []
 
     for i in l:
-        p = re.compile('\.\w+(-|\w)+\.\w+(-|\w)+')
+        p = re.compile('(\.|#)\w+(-|\w)+(\.|#)\w+(-|\w)+')
 
         if p.search(i[0]) and ' ' not in i[0]:
-            dot_combinator = re.split('(\.\w+(-|\w)+)(\.\w+(-|\w)+)', i[0])
+            dot_combinator = re.split('((\.|#)\w+(-|\w)+)((\.|#)\w+(-|\w)+)', i[0])
 
             for j in dot_combinator:
                 if j == '' or len(j) <= 1:
                     pass
                 else:
-                    css_dict.append((j, i[1]))
-
-            css_dict.append((i[0], i[1]))
+                    css_list.append((j, i[1]))
 
         elif ' ' in i[0]:
-
             split_combinator = i[0].split()
 
             for j in split_combinator:
                 if j == '>' or j == '+' or j == '~' or j == "*":
                     pass
                 elif p.search(j):
-                    dot_split = re.split('(\.\w+(-|\w)+)(\.\w+(-|\w)+)', j)
+                    dot_split = re.split('((\.|#)\w+(-|\w)+)((\.|#)\w+(-|\w)+)', j)
 
                     for s in dot_split:
                         if s == '' or len(s) <= 1:
                             pass
                         else:
-                            css_dict.append((s, i[1]))
+                            css_list.append((s, i[1]))
                 else:
-                    css_dict.append((j, i[1]))
+                    css_list.append((j, i[1]))
 
         else:
-            css_dict.append((i[0], i[1]))
+            css_list.append((i[0], i[1]))
 
-    return css_dict
+    return css_list
 
 def split_pseudo(l, sheet):
-    css_dict = []
+    css_list = []
 
     for i in l:
         if ':' in i[0]:
             split_pseudo = i[0].split(':')
 
             if '[' not in split_pseudo[0]:
-                css_dict.append((split_pseudo[0], i[1]))
+                css_list.append((split_pseudo[0], i[1]))
             else:
                 attribute_selector = split_pseudo[0].split('[')
-                css_dict.append((attribute_selector[0], i[1]))
+                css_list.append((attribute_selector[0], i[1]))
 
         else:
-            css_dict.append((i[0], i[1]))
+            css_list.append((i[0], i[1]))
 
-    return css_dict
+    return css_list
 
 def del_dupes(l):
     h = []
