@@ -1,34 +1,49 @@
 {% extends 'master.html' %}
 
 {% block body %}
-    <h2>The following unused rules were deleted from your stylesheet:</h2>
-        <code>
+    {% if deleted_rules %}
+    <div class="deleted">
+        <h2>The following unused rules were deleted from your stylesheet:</h2>
             <ul>
                 {% for item in deleted_rules %}
                 <li>{{ item }}</li>
                 {% endfor %}
             </ul>
-        </code>
+    </div>
+    {% endif %}
 
-    <hr />
-    
-    <h2>The following unused selectors were deleted from your stylesheet:</h2>
-        <code>
+    {% if not deleted_rules %}
+        <h2>No rules were deleted!</h2>
+
+        <hr />
+    {% endif %}
+
+    {% if deleted_selectors %}
+    <div class="deleted">    
+        <h2>The following unused selectors were deleted from your stylesheet:</h2>
             <ul>
                 {% for item in deleted_selectors %}
                 <li>{{ item }}</li>
                 {% endfor %}
             </ul>
-        </code>
+    </div>
+    {% endif %}
 
-    <hr />
+    {% if not deleted_selectors %}
+        <h2>No selectors were deleted!</h2>
+
+        <hr />
+    {% endif %}
     
+    {% if deleted_rules or deleted_selectors %}
     <div class="stylesheet">
         <h2>Here is your new, clean stylesheet</h2>
-            <textarea rows="50">
+            <textarea rows="20">
                 {{ new_stylesheet }}
             </textarea>
     </div>
+    {% endif %}
 
-    <button>Clean More Stylesheets</button>
+
+    <p style="margin:30px 0 60px"><a class="button" href={{ url_for("index") }}>Clean More Stylesheets</a></p>
 {% endblock %}
