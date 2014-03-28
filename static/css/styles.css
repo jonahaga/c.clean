@@ -2,23 +2,56 @@
 	http://127.0.0.1:5000/static/css/styles.css */
 	
 body { font-family: sans-serif; }
+
+:focus { outline: 0; }
 	
 #wrapper {
 	margin: 0 auto;
 	width: 800px; }
 	
-h1 {
-	font-size: 3em; }
+h1 { font-size: 3em; }
 	
 	h1 span:first-child { color: #00c9ff; }
 	
 	h1 span:last-child {
 		display: block;
 		font-size: .4em; }
+
+h2 { font-size: 1.4em; }
 	
 textarea { 
-    min-height: 50px;
+    display: block;
+    font: normal .8em/1.5 Consolas, Monaco, monospace;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 20px;
     width: 100%; }
+
+    textarea:focus {
+       border-color: rgba(82, 168, 236, .8);
+       outline: 0;
+       box-shadow: 0 0 4px rgba(82, 168, 236, .6); }
+
+.deleted {
+    padding: 20px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px; }
+
+    .deleted h2 { margin-top: 0; }
+
+    .deleted ul { padding: 0; }
+
+    .deleted ul li {
+        font: normal .8em/1.5 Consolas, Monaco, monospace;
+        list-style-type: none }
+
+.stylesheet h2 {
+    border-top: 1px solid #777;
+    margin-top: 40px;
+    padding-top: 15px; }
     
 label {
 	display: block;
@@ -27,7 +60,10 @@ label {
 	
 	textarea + label { margin-top: 30px; }
 	
-input[type="submit"] {
+a { text-decoration: none; }
+
+input[type="submit"],
+a.button {
     -moz-border-radius: 3px;
     -moz-box-shadow: 0px 3px 0px rgba(189,77,8,1), inset 0px 0px 3px rgba(255,255,255,0);
     -webkit-border-radius: 3px;
@@ -39,18 +75,20 @@ input[type="submit"] {
     border-radius: 3px;
     box-shadow: 0px 3px 0px rgba(189,77,8,1), inset 0px 0px 3px rgba(255,255,255,0);
     color: #fff;
-    font: bold 90%/1 Arial, sans-serif;
+    font: bold .9em/1 Arial, sans-serif;
     margin: 15px 0;
     padding: 8px 15px;
     text-transform: uppercase; }
     
-    input[type="submit"]:hover {
+    input[type="submit"]:hover,
+    a.button:hover {
     	background: -moz-linear-gradient( top, #e5690a 0%, #e86a0a);
 	    background: -webkit-gradient( linear, left top, left bottom, from(#ee7020), to(#ee701d));
 		background: -ms-linear-gradient( top, #e5690a 0%, #e86a0a);
 		cursor: pointer; }
 		
-	input[type="submit"]:active {
+	input[type="submit"]:active,
+    a.button:active {
 		position: relative;
 		top: 1px; }
 
@@ -58,5 +96,6 @@ p.small {
 	color: #777;
 	font-size: .8em;
 	margin: 0 0 5px; }
+
 	
 .stylesheet code { white-space: pre-wrap; }
