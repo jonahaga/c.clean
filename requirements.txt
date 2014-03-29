@@ -3,6 +3,7 @@ Jinja2==2.7.2
 MarkupSafe==0.19
 Werkzeug==0.9.4
 cssutils==1.0
+gunicorn==18.0
 itsdangerous==0.23
 node==0.9.12
 odict==1.5.1
