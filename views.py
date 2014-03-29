@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request
 from cssclean import *
+from rq import Queue
+from worker import conn
+
 
 app = Flask(__name__)
+q = Queue(connection-conn)
 
 @app.route("/", methods=["POST"])
 def process():
@@ -18,7 +22,7 @@ def results():
 
     # instantiate the parser and feed it some HTML
     parser = MyHTMLParser()
-    parser.feed(compile_html(html_to_parse))
+    q.enqueue(parser.feed(compile_html(html_to_parse)))
     parser.close()
     
     # Run delete_rules function to delete unused rules and get new stylesheet
