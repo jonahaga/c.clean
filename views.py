@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, session, url_for, flash, request
+from flask import Flask, render_template, request
 from cssclean import *
 
 app = Flask(__name__)
