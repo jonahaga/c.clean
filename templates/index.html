@@ -1,6 +1,12 @@
 {% extends 'master.html' %}
 
 {% block body %}
+        <ul class="flash">
+        {% for message in get_flashed_messages() %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+
         <form method="post" action="/results">
             <label>Paste URLs to the HTML files to parse</label>
                 <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
@@ -14,7 +20,7 @@
 <script>
     var overlay = {
     
-    click_on_overlay_hide: true,
+    click_on_overlay_hide: false,
 
     show_loading_image: true,
 
