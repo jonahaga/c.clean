@@ -22,8 +22,8 @@
     <div class="deleted">    
         <h2>The following unused selectors were deleted from your stylesheet:</h2>
             <ul>
-                {% for item in deleted_selectors %}
-                <li>{{ item }}</li>
+                {% for key, value in deleted_selectors.iteritems() %}
+                <li><span class="bold">{{ key }}</span> <span class="italic">from</span> <span class="rule">{{ value }}</span></li>
                 {% endfor %}
             </ul>
     </div>
@@ -31,7 +31,7 @@
 
     {% if not deleted_selectors and deleted_rules %}
         <h2>No selectors were deleted!</h2>
-
+        
         <hr />
     {% endif %}
 
@@ -47,7 +47,6 @@
             </textarea>
     </div>
     {% endif %}
-
 
     <p style="margin:60px 0"><a class="button" href={{ url_for("index") }}>Clean More Stylesheets</a></p>
 {% endblock %}
