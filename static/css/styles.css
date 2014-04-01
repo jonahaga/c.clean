@@ -11,7 +11,7 @@ body { font-family: 'Lato', sans-serif; }
 	width: 800px; }
 
 #overlay {
-	background-color: rgba(236, 240, 241, 0.8);
+	background-color: rgba(244, 251, 255, 0.8);
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -32,7 +32,18 @@ h1 { font-size: 3em; }
 h2 { 
 	color: #49b6ff;
 	font-size: 1.4em; }
-	
+
+ul.flash { padding: 0; }
+
+	ul.flash li {
+		background-color: #f9f892;
+		border: 1px solid #dbd966;
+		border-radius: 4px;
+		color: #444;
+		font-style: italic;
+		padding: 8px;
+		list-style-type: none; }
+		
 textarea { 
     display: block;
     font: normal .8em/1.5 Consolas, Monaco, monospace;
