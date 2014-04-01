@@ -1,5 +1,6 @@
 import cssutils
 import re
+import sys
 from HTMLParser import HTMLParser
 from selenium import webdriver
 from urllib2 import urlopen
@@ -55,6 +56,8 @@ class MyHTMLParser(HTMLParser):
 def compile_html(html_to_parse):
     file_list = html_to_parse.split(',')
     new_file = ''
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
     driver = webdriver.PhantomJS()
 
@@ -71,9 +74,9 @@ def compile_html(html_to_parse):
         # Parse HTML for Mobile Screens
         driver.set_window_size(480, 320)
         driver.get(stripped)
-        fd = driver.page_source
+        fm = driver.page_source
 
-        new_file += fd
+        new_file += fm
 
     return new_file
 
@@ -90,13 +93,14 @@ def compile_css(css_to_parse):
 
         f.close()
 
-    return new_file
+    return new_file    
 
 def css_parser(sheet):
     css_list = []
 
     for i_idx, i in enumerate(sheet.cssRules):
-        if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule) and not isinstance(i, cssutils.css.CSSMediaRule):
+        # if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule) and not isinstance(i, cssutils.css.CSSMediaRule) and not isinstance(i, cssutils.css.CSSFontFaceRule):
+        if isinstance(i, cssutils.css.CSSStyleRule):
             for idx, j in enumerate(i.selectorList):
                 css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
 
@@ -133,7 +137,6 @@ def split_combinator(l, sheet):
                             css_list.append((s, i[1]))
                 else:
                     css_list.append((j, i[1]))
-
         else:
             css_list.append((i[0], i[1]))
 
@@ -168,8 +171,8 @@ def del_dupes(l):
 def delete_selectors(sheet, parser):
     rules_to_delete_index = []
     rules_to_delete_text = [] 
-    selectors_deleted = []
-    ignore = ['body', 'div']
+    selectors_deleted = {}
+    ignore = ['body', 'div', 'html', '*']
 
     for i in split_pseudo(split_combinator(css_parser(sheet), sheet), sheet):
         if i[0] not in del_dupes(parser.selectors) and i[0] not in ignore:
@@ -180,13 +183,13 @@ def delete_selectors(sheet, parser):
                     if idx != len(sheet.cssRules[rule_idx].selectorList) - 1:
                         pass
                     else:
-                        selectors_deleted.append(str(i[0]) + ' from ' + str(i[1][2].selectorText))
+                        selectors_deleted[str(i[1][3].selectorText)] = str(i[1][2].selectorText)
                         del sheet.cssRules[rule_idx].selectorList[idx]
             else:
                 rules_to_delete_text.append(str(i[1][2].selectorText))
                 rules_to_delete_index.append(i[1][1])
 
-    return (rules_to_delete_index, selectors_deleted, rules_to_delete_text)
+    return (rules_to_delete_index, rules_to_delete_text, selectors_deleted)
 
 def delete_rules(rules, sheet, parser):
     rules = del_dupes(delete_selectors(sheet, parser)[0])
