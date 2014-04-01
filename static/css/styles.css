@@ -1,6 +1,7 @@
 /* @override 
 	http://127.0.0.1:5000/static/css/styles.css */
-	
+
+
 body { font-family: 'Lato', sans-serif; }
 
 :focus { outline: 0; }
@@ -26,6 +27,8 @@ h1 { font-size: 3em; }
 		font-size: .43em;
 		font-weight: normal; }
 
+    h1 a { color: #000; }
+
 h2 { 
 	color: #49b6ff;
 	font-size: 1.4em; }
@@ -47,7 +50,7 @@ textarea {
 .deleted {
     padding: 20px;
     margin-bottom: 14px;
-    background-color: #f7f7f9;
+    background-color: #f7f8f9;
     border: 1px solid #e1e1e8;
     border-radius: 4px; }
 
@@ -56,8 +59,32 @@ textarea {
     .deleted ul { padding: 0; }
 
     .deleted ul li {
+    	border-bottom: 1px solid #bdc6cd;
         font: normal .8em/1.5 Consolas, Monaco, monospace;
-        list-style-type: none }
+        list-style-type: none;
+        padding: 3px 0; }
+        
+	.deleted ul li:first-child { margin-top: 0; }
+	
+	.deleted + .deleted ul li { padding: 10px 0 8px; }
+	
+		.deleted ul li:first-child { padding-top: 0; }
+	
+	.deleted span.bold { 
+		background-color: #dadee3;
+		border: 1px solid #bdc5cd;
+		border-radius: 3px;
+		padding: 2px 3px; }
+		
+	.deleted span.rule {
+		display: block;
+		font-size: .9em;
+		margin: 4px 0 0 25px; }
+	
+	.deleted span.italic { 
+		font: bold 1em/1 sans-serif;
+		color: #8292a2;
+		font-style: italic; }
 
 .stylesheet h2 {
     border-top: 1px solid #777;
