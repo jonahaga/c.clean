@@ -183,7 +183,7 @@ def delete_selectors(sheet, parser):
                     if idx != len(sheet.cssRules[rule_idx].selectorList) - 1:
                         pass
                     else:
-                        selectors_deleted[str(i[1][3].selectorText)] = str(i[1][2].selectorText)
+                        selectors_deleted[str(data.selectorText)] = str(i[1][2].selectorText)
                         del sheet.cssRules[rule_idx].selectorList[idx]
             else:
                 rules_to_delete_text.append(str(i[1][2].selectorText))
