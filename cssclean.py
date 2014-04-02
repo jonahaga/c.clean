@@ -9,6 +9,8 @@ from urllib2 import urlopen
 # create a subclass and override the handler methods
 class MyHTMLParser(HTMLParser):
     selectors = []
+    stylesheets_relative = []
+    stylesheets_absolute = []
     def handle_starttag(self, tag, attrs):
         ignore = ['head', 'title', 'link', 'style', 'script', 'meta']
         if tag not in ignore:
@@ -53,7 +55,7 @@ class MyHTMLParser(HTMLParser):
             else:
                 self.selectors.append(tag)
 
-def compile_html(html_to_parse):
+def compile_phantom(html_to_parse):
     file_list = html_to_parse.split(',')
     new_file = ''
     reload(sys)
@@ -80,8 +82,8 @@ def compile_html(html_to_parse):
 
     return new_file
 
-def compile_css(css_to_parse):
-    file_list = css_to_parse.split(',')
+def compile_files(files_to_parse):
+    file_list = files_to_parse.split(',')
     new_file = ''
 
     for i in file_list:
@@ -99,7 +101,6 @@ def css_parser(sheet):
     css_list = []
 
     for i_idx, i in enumerate(sheet.cssRules):
-        # if not isinstance(i, cssutils.css.CSSComment) and not isinstance(i, cssutils.css.CSSImportRule) and not isinstance(i, cssutils.css.CSSMediaRule) and not isinstance(i, cssutils.css.CSSFontFaceRule):
         if isinstance(i, cssutils.css.CSSStyleRule):
             for idx, j in enumerate(i.selectorList):
                 css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
