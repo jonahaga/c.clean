@@ -7,16 +7,54 @@
         {% endfor %}
         </ul>
 
+        
         <form method="post" action="/results">
-            <label>Paste URLs to the HTML files to parse</label>
-                <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
-                <textarea cols="80" rows="5" name="html" placeholder="ex. http://mysite.com, http://mysite.com/about"></textarea>
-            <label>Paste URLs to the CSS files to parse</label>
-                <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
-                <textarea cols="80" rows="5" name="css" placeholder="ex. http://mysite.com/assets/styles.css"></textarea>
+            <div class="clearfix row">
+                <div class="size1of12">
+                    <div class="r-pad">
+                        <h2 class="step"><span>1</span></h2>
+                    </div>
+                </div>
+                <div class="size11of12">
+                    <label>Paste URLs to the HTML pages to parse</label>
+                        <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
+                            <textarea cols="80" rows="5" name="html" placeholder="ex. http://mysite.com, http://mysite.com/about"></textarea>
+                </div>
+            </div>
+            <div class="clearfix row">
+                <div class="size1of12">
+                    <div class="r-pad">
+                        <h2 class="step"><span>2</span></h2>
+                    </div>
+                </div>
+                <div class="size11of12">
+                    <label>Paste URLs to the CSS files to parse</label>
+                        <p class="small">Separate multiple URLs with a comma, and don't forget http://</p>
+                        <textarea cols="80" rows="5" name="css" placeholder="ex. http://mysite.com/assets/styles.css"></textarea>
+                </div>
+            </div>
+            <div class="clearfix row">
+                <div class="size1of12">
+                    <div class="r-pad">
+                        <h2 class="step"><span>3</span></h2>
+                    </div>
+                </div>
+                <div class="size11of12">
+                    <label class="sub"><input type="radio" name="phantom" value="with_phantom" checked="true">
+                        Parse HTML with Javascript loaded <span class="label_default">(Default)</span> <sup><a href="#" class="tooltip_link" data-toggle="tooltip" data-animation="true" title="If your webpage uses Javascript, there's a good chance there are classes and IDs that aren't present in your plain HTML file. This option takes much longer, but your Javascript-injected classes/IDs will remain in tact" data-placement="right">?</a></sup></label>
+                    <label class="sub"><input type="radio" name="phantom" value="without_phantom">
+                        Parse plain HTML <sup><a href="#" class="tooltip_link" data-toggle="tooltip" data-animation="true" title="This option will parse your webpage without any Javascript loaded, and will delete styles/selectors that reference classes/IDs that were added by any Javascript files on your page." data-placement="right">?</a></sup></label>
+                </div>
+            </div>
+
             <input type="submit" onclick="overlay.show();">
         </form>
 
+<script>
+    jQuery(function ($) {
+        $("a").tooltip()
+    });
+</script>
 <script>
     var overlay = {
     
