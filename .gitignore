@@ -8,3 +8,4 @@ env/
 cssclean_heroku_keys*
 ghostdriver.log
 cssclean.sublime*
+cssutils-1.0/
