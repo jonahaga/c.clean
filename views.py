@@ -33,23 +33,26 @@ def results():
             parser.close()
 
             # Run delete_rules function to delete unused rules and get new stylesheet
-            sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
+            orig_stylesheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None).cssText
+            sheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None)
             deleted_selectors = delete_selectors(sheet, parser)[2]
             deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
             new_stylesheet = delete_rules(delete_selectors, sheet, parser)
+            sheet_diff = diff(orig_stylesheet, new_stylesheet)
 
             deleted_rules.sort()
 
             return render_template("results.html", deleted_selectors=deleted_selectors,
                                                    deleted_rules=deleted_rules,
-                                                   new_stylesheet=new_stylesheet )
+                                                   new_stylesheet=new_stylesheet,
+                                                   sheet_diff=sheet_diff )
         else:
             parser.feed(compile_phantom(html_to_parse))
             parser.close()
 
             # Run delete_rules function to delete unused rules and get new stylesheet
-            orig_stylesheet = cssutils.CSSParser().parseString(compile_files(css_to_parse)).cssText
-            sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
+            orig_stylesheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None).cssText
+            sheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None)
             deleted_selectors = delete_selectors(sheet, parser)[2]
             deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
             new_stylesheet = delete_rules(delete_selectors, sheet, parser)
