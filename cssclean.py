@@ -102,7 +102,7 @@ def css_parser(sheet):
     css_list = []
 
     for i_idx, i in enumerate(sheet.cssRules):
-        if isinstance(i, cssutils.css.CSSStyleRule):
+        if isinstance(i, cssutils.css.CSSStyleRule) and not isinstance(i, cssutils.css.CSSFontFaceRule):
             for idx, j in enumerate(i.selectorList):
                 css_list.append((str(j.selectorText), [i, i_idx, i.selectorList, j, idx]))
 
