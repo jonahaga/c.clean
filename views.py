@@ -19,7 +19,6 @@ def results():
     css_to_parse = request.form.get("css")
     phantom = request.form.get("phantom")
 
-
     if 'http' not in html_to_parse or 'http' not in css_to_parse:
         flash("Don't forget 'http://'")
         return redirect(url_for("index"))
@@ -53,6 +52,7 @@ def results():
             # Run delete_rules function to delete unused rules and get new stylesheet
             orig_stylesheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None).cssText
             sheet = cssutils.CSSParser(raiseExceptions=None, validate=False).parseString(compile_files(css_to_parse), validate=None)
+            
             deleted_selectors = delete_selectors(sheet, parser)[2]
             deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
             new_stylesheet = delete_rules(delete_selectors, sheet, parser)

@@ -156,7 +156,9 @@ def split_pseudo(l, sheet):
             else:
                 attribute_selector = split_pseudo[0].split('[')
                 css_list.append((attribute_selector[0], i[1]))
-
+        elif '[' in i[0]:
+            split_attr = i[0].split('[')
+            css_list.append((split_attr[0], i[1]))
         else:
             css_list.append((i[0], i[1]))
 
