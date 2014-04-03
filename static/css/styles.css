@@ -228,3 +228,32 @@ span.label_default {
   margin-top: -5px;
   border-width: 5px 5px 5px 0;
   border-right-color: #333333; }
+
+.stylesheet table.diff {
+	color: #5b5b5b;
+	font-family: Consolas, Monaco, monospace;
+	font-size: .7em;
+	max-width: 800px;
+	word-wrap: break-word; }
+
+.stylesheet table.diff td {
+	max-width: 365px;
+	overflow-x: hidden;
+	padding: 0 5px;
+	white-space: normal; }
+.stylesheet table.diff td.diff_next { display: none; }
+
+.stylesheet table.diff span.diff_sub {
+	display: block;
+	color: #000;
+	background-color: #e4b9b9; }
+
+.stylesheet table.diff span.diff_add {
+	display: block;
+	background-color: #c1e2b3; }
+
+.stylesheet table.diff .diff_header {
+	background-color: #e4e4e4;
+	padding: 0 2px; }
+
+.stylesheet table.diff tr { border-bottom: 1px dotted #cbcbcb; }
