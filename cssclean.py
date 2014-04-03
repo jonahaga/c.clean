@@ -1,4 +1,5 @@
 import cssutils
+import difflib
 import re
 import sys
 from HTMLParser import HTMLParser
@@ -202,3 +203,11 @@ def delete_rules(rules, sheet, parser):
         del sheet.cssRules[i]
 
     return sheet.cssText
+
+def diff(orig_sheet, new_sheet):
+    d = difflib.HtmlDiff()
+
+    orig_sheet_lines = orig_sheet.splitlines()
+    new_sheet_lines = new_sheet.splitlines()
+
+    return d.make_table(orig_sheet_lines, new_sheet_lines)
