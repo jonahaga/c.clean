@@ -45,6 +45,10 @@
             <textarea rows="20">
                 {{ new_stylesheet }}
             </textarea>
+
+        <h2>Original vs. New</h2>
+            {{ sheet_diff|safe }}
+
     </div>
     {% endif %}
 
