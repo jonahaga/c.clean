@@ -3,7 +3,7 @@
 {% block body %}
     {% if deleted_rules %}
     <div class="deleted">
-        <h2>The following unused rules were deleted from your stylesheet:</h2>
+        <h2>Unused rules that were deleted from your stylesheet:</h2>
             <ul>
                 {% for item in deleted_rules %}
                 <li>{{ item }}</li>
@@ -20,7 +20,7 @@
 
     {% if deleted_selectors %}
     <div class="deleted">    
-        <h2>The following unused selectors were deleted from your stylesheet:</h2>
+        <h2>Unused selectors that were deleted from your stylesheet:</h2>
             <ul>
                 {% for key, value in deleted_selectors.iteritems() %}
                 <li><span class="bold">{{ key }}</span> <span class="italic">from</span> <span class="rule">{{ value }}</span></li>
