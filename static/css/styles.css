@@ -273,6 +273,7 @@ table.diff {
 	font-family: Consolas, Monaco, monospace;
 	font-size: .7em;
 	max-width: 900px;
+	width: 900px;
 	word-wrap: break-word; }
 
 table.diff colgroup { border: 0; }
