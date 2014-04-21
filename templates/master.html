@@ -7,10 +7,17 @@
     <script type="text/javascript" src="../static/js/bootstrap.js"></script>
 </head>
 
-<body onload="overlay.init()">
+{% block bodytag %}
+{% endblock %}
     <div id="header">
         <div id="header-inner">
-            <h1><a href="/" title="{c.lean} - The CSS Cleaner">{c<span>.</span>lean} <span>the CSS cleaner</span></a></h1>
+            <div class="clearfix">
+                <div class="size2of5">
+                    <h1><a href="/" title="{c.lean} - The CSS Cleaner">{c<span>.</span>lean} <span>the CSS cleaner</span></a></h1>
+                </div>
+                {% block headernav %}
+                {% endblock %}
+            </div>
         </div>
     </div>
     <div id="wrapper">
@@ -19,5 +26,9 @@
             {% endblock %}    
         </div>    
     </div>
+
+{% block scripts %}
+{% endblock %}
+
 </body>
 </html>
