@@ -1,5 +1,9 @@
 {% extends 'master.html' %}
 
+{% block bodytag %}
+<body onload="overlay.init()">
+{% endblock %}
+
 {% block body %}
         <ul class="flash">
         {% for message in get_flashed_messages() %}
