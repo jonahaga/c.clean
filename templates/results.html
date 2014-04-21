@@ -1,8 +1,25 @@
 {% extends 'master.html' %}
 
+{% block bodytag %}
+<body data-spy="scroll" data-target=".headerNav">
+{% endblock %}
+
+{% block headernav %}
+    <div class="size3of5">
+        <div class="headerNav">
+            <ul class="nav">
+                <li><a href="#rules" title="Jump to Unused Rules">Unused Rules</a></li>
+                <li><a href="#selectors" title="Jump to Unused Selectors">Unused Selectors</a></li>
+                <li><a href="#new_stylesheet" title="Download New, Clean Stylesheet">New Stylesheet</a></li>
+                <li><a href="#diff" title="View Side-by-side Diff">Side-by-Side Diff</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
     {% if deleted_rules %}
-    <div class="deleted">
+    <div class="deleted" id="rules">
         <h2>Unused rules that were deleted from your stylesheet:</h2>
             <ul>
                 {% for item in deleted_rules %}
@@ -19,7 +36,7 @@
     {% endif %}
 
     {% if deleted_selectors %}
-    <div class="deleted">    
+    <div class="deleted" id="selectors">    
         <h2>Unused selectors that were deleted from your stylesheet:</h2>
             <ul>
                 {% for key, value in deleted_selectors.iteritems() %}
@@ -40,17 +57,31 @@
     {% endif %}
     
     {% if deleted_rules or deleted_selectors %}
-    <div class="stylesheet">
+    <div class="stylesheet" id="new_stylesheet">
         <h2>Here is your new, clean stylesheet</h2>
             <textarea rows="20">
                 {{ new_stylesheet }}
             </textarea>
 
-        <h2>Original vs. New</h2>
+        <h2 id="diff">Original vs. New</h2>
             {{ sheet_diff|safe }}
 
     </div>
     {% endif %}
 
     <p style="margin:60px 0"><a class="button" href={{ url_for("index") }}>Clean More Stylesheets</a></p>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('body').scrollspy({ target: '.headerNav', offset:160 })
+
+    var offset = 140;
+
+    $('.headerNav li a').click(function(event) {
+        event.preventDefault();
+        $($(this).attr('href'))[0].scrollIntoView();
+        scrollBy(0, -offset);
+    });
+</script>
 {% endblock %}
