@@ -10,7 +10,6 @@
             <li>{{ message }}</li>
         {% endfor %}
         </ul>
-
         
         <form method="post" action="/results">
             <div class="clearfix row">
@@ -50,17 +49,21 @@
                         Parse plain HTML <sup><a href="#" class="tooltip_link" data-toggle="tooltip" data-animation="true" title="This option will parse your webpage without any Javascript loaded, and will delete styles/selectors that reference classes/IDs that were added by any Javascript files on your page." data-placement="right">?</a></sup></label>
                 </div>
             </div>
-
+            
             <input type="submit" onclick="overlay.show();">
         </form>
 
+{% endblock %}
+
+{% block scripts %}
 <script>
     jQuery(function ($) {
         $("a").tooltip()
     });
 </script>
+
 <script>
-    var overlay = {
+    // var overlay = {
     
     click_on_overlay_hide: false,
 
@@ -108,5 +111,4 @@
 };
 
 </script>
-
 {% endblock %}
