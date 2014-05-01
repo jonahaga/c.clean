@@ -1,6 +1,3 @@
-/* @override 
-	http://127.0.0.1:5000/static/css/styles.css */
-	
 /* @group Structure */
 
 * { margin: 0; padding: 0; }
@@ -104,6 +101,7 @@ body {
 
 .headerNav {
 	float: right;
+	font-weight: 300;
 	margin-top: 60px; }
 	
 	.headerNav li {
