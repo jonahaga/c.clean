@@ -23,41 +23,27 @@ def results():
     parser = MyHTMLParser()
 
     if phantom == "without_phantom":
-        parser.feed(compile_files(html_to_parse))
-        parser.close()
-
-        # Run delete_rules function to delete unused rules and get new stylesheet
-        orig_stylesheet = cssutils.CSSParser().parseString(compile_files(css_to_parse)).cssText
-        sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
-        deleted_selectors = delete_selectors(sheet, parser)[2]
-        deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
-        new_stylesheet = delete_rules(delete_selectors, sheet, parser)
-        sheet_diff = diff(orig_stylesheet, new_stylesheet)
-
-        deleted_rules.sort()
-
-        return render_template("results.html", deleted_selectors=deleted_selectors,
-                                               deleted_rules=deleted_rules,
-                                               new_stylesheet=new_stylesheet,
-                                               sheet_diff=sheet_diff )
+        compiled_files = compile_files(html_to_parse)
     else:
-        parser.feed(compile_phantom(html_to_parse))
-        parser.close()
+        compiled_files = compile_phantom(html_to_parse)
 
-        # Run delete_rules function to delete unused rules and get new stylesheet
-        orig_stylesheet = cssutils.CSSParser().parseString(compile_files(css_to_parse)).cssText
-        sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
-        deleted_selectors = delete_selectors(sheet, parser)[2]
-        deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
-        new_stylesheet = delete_rules(delete_selectors, sheet, parser)
-        sheet_diff = diff(orig_stylesheet, new_stylesheet)
+    parser.feed(compile_files(html_to_parse))
+    parser.close()
 
-        deleted_rules.sort()
+    # Run delete_rules function to delete unused rules and get new stylesheet
+    orig_stylesheet = cssutils.CSSParser().parseString(compile_files(css_to_parse)).cssText
+    sheet = cssutils.CSSParser().parseString(compile_files(css_to_parse))
+    deleted_selectors = delete_selectors(sheet, parser)[2]
+    deleted_rules = del_dupes(delete_selectors(sheet, parser)[1])
+    new_stylesheet = delete_rules(delete_selectors, sheet, parser)
+    sheet_diff = diff(orig_stylesheet, new_stylesheet)
 
-        return render_template("results.html", deleted_selectors=deleted_selectors,
-                                               deleted_rules=deleted_rules,
-                                               new_stylesheet=new_stylesheet,
-                                               sheet_diff=sheet_diff )
+    deleted_rules.sort()
+
+    return render_template("results.html", deleted_selectors=deleted_selectors,
+                                           deleted_rules=deleted_rules,
+                                           new_stylesheet=new_stylesheet,
+                                           sheet_diff=sheet_diff )
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
